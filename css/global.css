@@ -1,0 +1,40 @@
+/* Estilos globales y variables de tema */
+:root {
+  color-scheme: light;
+  --bg: #f7f8f6;
+  --paper: #ffffff;
+  --ink: #263a37;
+  --muted: #71807b;
+  --green: #527e70;
+  --green-dark: #3f685b;
+  --green-soft: #eaf1ed;
+  --rose-soft: #f6ece8;
+  --gold-soft: #f5f0e2;
+  --line: #e5eae6;
+  --shadow: 0 12px 32px rgba(44, 66, 57, .07);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #151c1a;
+  --paper: #202a26;
+  --ink: #edf3ef;
+  --muted: #b0beb6;
+  --green: #8bb8a4;
+  --green-dark: #a4cbb8;
+  --green-soft: #293b33;
+  --rose-soft: #40312f;
+  --gold-soft: #3d3829;
+  --line: #35433c;
+  --shadow: 0 12px 32px rgba(0, 0, 0, .22);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  transition: background-color .2s ease, color .2s ease;
+}
+button, a { -webkit-tap-highlight-color: transparent; }

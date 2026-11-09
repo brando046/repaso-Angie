@@ -1,0 +1,1 @@
+Carpeta reservada para imágenes e ilustraciones de las unidades.\n
