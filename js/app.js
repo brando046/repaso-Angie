@@ -152,18 +152,6 @@ document.getElementById("history-list").addEventListener("click",event=>{
 renderHistory();
 
 
-// Navegación entre la zona de exámenes y la biblioteca audiovisual.
-const viewTabs = document.querySelectorAll(".nav-tab");
-const studyView = document.getElementById("study-view");
-const videosView = document.getElementById("videos-view");
-viewTabs.forEach(tab => tab.addEventListener("click", () => {
-  const showVideos = tab.dataset.view === "videos-view";
-  studyView.hidden = showVideos;
-  videosView.hidden = !showVideos;
-  viewTabs.forEach(item => item.classList.toggle("active", item === tab));
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}));
-
 // Añadiremos aquí los vídeos reales cuando se faciliten sus nombres y enlaces.
 // Cada unidad puede tener cero, uno o varios vídeos. Las unidades vacías no se muestran.
 window.videoLibrary = window.videoLibrary || {
@@ -244,80 +232,6 @@ window.videoLibrary = window.videoLibrary || {
   ]
 };
 
-function renderVideoLibrary() {
-  const unitContainer = document.getElementById("video-units");
-  const extraContainer = document.getElementById("extra-videos");
-  const units = (window.videoLibrary.units || []).filter(unit => Array.isArray(unit.videos) && unit.videos.length);
-  const extras = window.videoLibrary.extras || [];
-  document.getElementById("video-unit-count").textContent = units.length ? `${units.length} unidades con vídeos` : "Aún sin vídeos";
-  document.getElementById("extra-video-count").textContent = `${extras.length} vídeos`;
-  unitContainer.replaceChildren();
-
-  if (!units.length) {
-    const empty = document.createElement("div");
-    empty.className = "video-empty";
-    empty.innerHTML = '<span>✿</span><h3>Tu biblioteca está preparada</h3><p>Cuando incorporemos los enlaces y las grabaciones, aparecerán aquí las unidades que tengan vídeos. Las unidades sin contenido audiovisual no se mostrarán.</p>';
-    unitContainer.appendChild(empty);
-  } else {
-    units.forEach(unit => {
-      const card = document.createElement("article");
-      card.className = "video-unit-card";
-      const top = document.createElement("div");
-      top.className = "video-unit-top";
-      const label = document.createElement("span");
-      label.className = "unit-number";
-      label.textContent = unit.label;
-      const count = document.createElement("span");
-      count.className = "video-count";
-      count.textContent = `${unit.videos.length} ${unit.videos.length === 1 ? "vídeo" : "vídeos"}`;
-      top.append(label, count);
-      const title = document.createElement("h3");
-      title.textContent = unit.title;
-      card.append(top, title);
-      if (unit.pending) {
-        const pending = document.createElement("p");
-        pending.className = "video-pending-note";
-        pending.textContent = unit.pending;
-        card.appendChild(pending);
-      }
-      const list = document.createElement("div");
-      list.className = "video-lesson-list";
-      unit.videos.forEach(video => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "video-lesson";
-        button.innerHTML = '<span class="lesson-play">▶</span><span class="lesson-title"></span><span class="lesson-arrow">→</span>';
-        button.querySelector(".lesson-title").textContent = video.title;
-        button.addEventListener("click", () => playCourseVideo(video, unit.title));
-        list.appendChild(button);
-      });
-      card.appendChild(list);
-      unitContainer.appendChild(card);
-    });
-  }
-
-  extraContainer.replaceChildren();
-  if (!extras.length) {
-    const empty = document.createElement("div");
-    empty.className = "video-empty compact";
-    empty.innerHTML = '<span>▶</span><h3>Contenidos audiovisuales</h3><p>Aquí organizaremos los vídeos complementarios numerados del campus.</p>';
-    extraContainer.appendChild(empty);
-  } else {
-    const list = document.createElement("div");
-    list.className = "video-unit-card extra-list";
-    extras.forEach(video => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "video-lesson";
-      button.innerHTML = '<span class="lesson-play">▶</span><span class="lesson-title"></span><span class="lesson-arrow">→</span>';
-      button.querySelector(".lesson-title").textContent = video.title;
-      button.addEventListener("click", () => playCourseVideo(video, "Contenidos audiovisuales"));
-      list.appendChild(button);
-    });
-    extraContainer.appendChild(list);
-  }
-}
-
 function playCourseVideo(video, unitTitle) {
   const panel = document.getElementById("video-player-panel");
   const frame = document.getElementById("video-frame");
@@ -354,4 +268,115 @@ document.getElementById("close-video").addEventListener("click", () => {
   document.getElementById("video-player-panel").hidden = true;
   document.getElementById("video-frame").replaceChildren();
 });
-renderVideoLibrary();
+// Navegación principal: zona de práctica y biblioteca unificada del curso.
+const viewTabs=document.querySelectorAll(".nav-tab");
+const studyView=document.getElementById("study-view");
+const courseView=document.getElementById("course-view");
+viewTabs.forEach(tab=>tab.addEventListener("click",()=>{
+  const target=tab.dataset.view;
+  studyView.hidden=target!=="study-view";
+  courseView.hidden=target!=="course-view";
+  viewTabs.forEach(item=>item.classList.toggle("active",item===tab));
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+const pdfDocuments={"1":[{"section":"Materiales de apoyo","label":"Lectura 1 (1).pdf","path":"docs/unidad-1/Lectura 1 (1).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 1.pdf","path":"docs/unidad-1/Tema 1.pdf","kind":"pdf"}],"10":[{"section":"Materiales de apoyo","label":"Lectura 1 (9).pdf","path":"docs/unidad-10/Lectura 1 (9).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 10 (1).pdf","path":"docs/unidad-10/Tema 10 (1).pdf","kind":"pdf"}],"11":[{"section":"Materiales de apoyo","label":"Lectura 1 (10).pdf","path":"docs/unidad-11/Lectura 1 (10).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 11 (1).pdf","path":"docs/unidad-11/Tema 11 (1).pdf","kind":"pdf"}],"12":[{"section":"Materiales de apoyo","label":"Lectura 1 (11).pdf","path":"docs/unidad-12/Lectura 1 (11).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 12 (1).pdf","path":"docs/unidad-12/Tema 12 (1).pdf","kind":"pdf"}],"2":[{"section":"Materiales de apoyo","label":"Lectura 1 (2).pdf","path":"docs/unidad-2/Lectura 1 (2).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 2.pdf","path":"docs/unidad-2/Tema 2.pdf","kind":"pdf"}],"3":[{"section":"Materiales de apoyo","label":"ENTRENO PROFESIONAL MICRO. Estructuras y trazos técnica pelo a pelo.","path":"docs/unidad-3/ENTRENO MICRO. Estructuras y trazos técnica pelo a pelo.pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Lectura 1 (3).pdf","path":"docs/unidad-3/Lectura 1 (3).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 3.pdf","path":"docs/unidad-3/Tema 3.pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Esquema TIPOS DE AGUJAS","path":"docs/unidad-3/Tipos de agujas Micro.pdf","kind":"pdf"}],"4":[{"section":"Materiales de apoyo","label":"Lectura 1 (4).pdf","path":"docs/unidad-4/Lectura 1 (4).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 4.pdf","path":"docs/unidad-4/Tema 4.pdf","kind":"pdf"}],"5":[{"section":"Materiales de apoyo","label":"Lectura 1 (4).pdf","path":"docs/unidad-5/Lectura 1 (4).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 5 (1).pdf","path":"docs/unidad-5/Tema 5 (1).pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Test de fototipo Fitzpatrick","path":"docs/unidad-5/Test de fototipo Fitzpatrick.gif","kind":"image"}],"6":[{"section":"Materiales de apoyo","label":"Lectura 1 (6).pdf","path":"docs/unidad-6/Lectura 1 (6).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 6 (1).pdf","path":"docs/unidad-6/Tema 6 (1).pdf","kind":"pdf"}],"7":[{"section":"Materiales de apoyo","label":"Lectura 1 (7).pdf","path":"docs/unidad-7/Lectura 1 (7).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 7.pdf","path":"docs/unidad-7/Tema 7.pdf","kind":"pdf"}],"8":[{"section":"Contenido teórico","label":"Tema 8.pdf","path":"docs/unidad-8/Tema 8.pdf","kind":"pdf"}],"9":[{"section":"Materiales de apoyo","label":"Lectura 1 (8).pdf","path":"docs/unidad-9/Lectura 1 (8).pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Anexo. Parámetros HIFU.","path":"docs/unidad-9/PARAMETROS HIFU.pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 9.pdf","path":"docs/unidad-9/Tema 9.pdf","kind":"pdf"}]};
+const unitTitles={1:"Introducción a la medicina estética",2:"Medicina estética facial",3:"Micropigmentación",4:"Aparatología en estética",5:"Depilación",6:"Tratamientos estéticos",7:"Higiene facial y peelings",8:"Cuidados y tratamientos",9:"Tratamientos médico-estéticos",10:"Cosmetología aplicada",11:"Diagnóstico de la piel",12:"Consentimientos informados"};
+const courseUnitsEl=document.getElementById("course-units");
+const courseNav=document.getElementById("course-unit-nav");
+const courseSearch=document.getElementById("course-search");
+const pdfUnits=Object.keys(pdfDocuments).map(n=>({n:Number(n)}));
+function makeCourseItem(label,kind,unitTitle,video=null){
+ const row=document.createElement("div");row.className="course-item";
+ const icon=document.createElement("span");icon.className=`course-item-icon ${kind==="video"?"is-video":"is-pdf"}`;icon.textContent=kind==="video"?"▶":"PDF";
+ const copy=document.createElement("div");copy.className="course-item-copy";
+ const name=document.createElement("strong");name.textContent=label;
+ const meta=document.createElement("small");meta.textContent=kind==="video"?"Clase audiovisual":"Documento PDF pendiente de incorporar";
+ copy.append(name,meta);
+ const action=document.createElement("button");action.type="button";action.className="course-item-action";
+ if(kind==="video"){action.textContent="Ver vídeo";action.addEventListener("click",()=>playCourseVideo(video,unitTitle));}
+ else {action.textContent="Próximamente";action.disabled=true;}
+ row.append(icon,copy,action);return row;
+}
+
+function openCourseDocument(doc,unitNo){
+ const reader=document.getElementById("course-reader");
+ const content=document.getElementById("course-reader-content");
+ content.replaceChildren();
+ document.getElementById("course-reader-title").textContent=doc.label;
+ document.getElementById("course-reader-kind").textContent=doc.kind==="image"?"MATERIAL DE APOYO":"LECTOR PDF";
+ if(doc.kind==="image"){
+  const img=document.createElement("img");img.src=doc.path;img.alt=doc.label;img.className="course-document-image";content.append(img);
+ }else{
+  const frame=document.createElement("iframe");frame.src=doc.path;frame.title=doc.label;frame.className="course-pdf-frame";content.append(frame);
+ }
+ reader.hidden=false;reader.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function makeCourseItem(label,kind,unitTitle,video=null,doc=null){
+ const row=document.createElement("div");row.className="course-item";
+ const icon=document.createElement("span");icon.className="course-item-icon "+({video:"is-video",pdf:"is-pdf",image:"is-image"}[kind]);icon.textContent=kind==="video"?"▶":kind==="image"?"IMG":"PDF";
+ const copy=document.createElement("div");copy.className="course-item-copy";
+ const name=document.createElement("strong");name.textContent=label;
+ const meta=document.createElement("small");meta.textContent=kind==="video"?"Clase audiovisual":kind==="image"?"Imagen de apoyo":"Documento PDF";
+ copy.append(name,meta);
+ const action=document.createElement("button");action.type="button";action.className="course-item-action";
+ if(kind==="video"){action.textContent="Ver vídeo";action.addEventListener("click",()=>playCourseVideo(video,unitTitle));}
+ else {action.textContent=kind==="image"?"Ver imagen":"Abrir PDF";action.addEventListener("click",()=>openCourseDocument(doc,unitTitle));}
+ row.append(icon,copy,action);return row;
+}
+function renderCourse(filter=""){
+ const term=filter.trim().toLocaleLowerCase("es");courseUnitsEl.replaceChildren();courseNav.replaceChildren();
+ pdfUnits.forEach(unit=>{
+  const videos=(window.videoLibrary.units||[]).filter(v=>v.label===`UNIDAD DIDÁCTICA ${unit.n}`).flatMap(v=>v.videos||[]);
+  const docs=(pdfDocuments[unit.n]||[]).filter(d=>!term||(`${d.label} unidad ${unit.n} ${d.section}`).toLocaleLowerCase("es").includes(term));
+  const matchingVideos=videos.filter(v=>!term||(`${v.title} unidad ${unit.n}`).toLocaleLowerCase("es").includes(term));
+  if(term&&!docs.length&&!matchingVideos.length&&!(`unidad didáctica ${unit.n} ${unitTitles[unit.n]}`).toLocaleLowerCase("es").includes(term))return;
+  const nav=document.createElement("a");nav.href=`#course-unit-${unit.n}`;nav.textContent=`Unidad ${unit.n}`;courseNav.append(nav);
+  const card=document.createElement("details");card.className="course-unit";card.id=`course-unit-${unit.n}`;card.open=Boolean(term);
+  const summary=document.createElement("summary");summary.className="course-unit-summary";
+  const folder=document.createElement("span");folder.className="course-folder-icon";folder.textContent="▰";
+  const heading=document.createElement("span");heading.className="course-unit-heading";
+  const title=document.createElement("strong");title.textContent=`UNIDAD DIDÁCTICA ${unit.n}`;
+  const subtitle=document.createElement("small");subtitle.textContent=unitTitles[unit.n]||"Contenido del curso";
+  heading.append(title,subtitle);
+  const total=document.createElement("span");total.className="course-count";total.textContent=`${docs.length+matchingVideos.length} elementos`;
+  summary.append(folder,heading,total);card.append(summary);
+  const body=document.createElement("div");body.className="course-unit-body";
+  ["Contenido teórico","Materiales de apoyo"].forEach(sectionName=>{
+   const sectionDocs=docs.filter(d=>d.section===sectionName);if(!sectionDocs.length)return;
+   const section=document.createElement("section");section.className="course-folder-section";
+   const h=document.createElement("h3");h.textContent=`📁 ${sectionName}`;section.append(h);
+   const list=document.createElement("div");list.className="course-item-list";
+   sectionDocs.forEach(doc=>list.append(makeCourseItem(doc.label,doc.kind,`Unidad didáctica ${unit.n}`,null,doc)));
+   section.append(list);body.append(section);
+  });
+  if(matchingVideos.length){
+   const section=document.createElement("section");section.className="course-folder-section";
+   const h=document.createElement("h3");h.textContent="▶ Clases audiovisuales";section.append(h);
+   const list=document.createElement("div");list.className="course-item-list";
+   matchingVideos.forEach(v=>list.append(makeCourseItem(v.title,"video",`Unidad didáctica ${unit.n}`,v)));
+   section.append(list);body.append(section);
+  }
+  if(!body.children.length){const empty=document.createElement("p");empty.className="course-no-content";empty.textContent="Los materiales de esta unidad se añadirán próximamente.";body.append(empty);}
+  card.append(body);courseUnitsEl.append(card);
+ });
+}
+renderCourse();
+courseSearch?.addEventListener("input",()=>renderCourse(courseSearch.value));
+
+// Las tres lecciones del auxiliar se muestran como bloque audiovisual independiente, no dentro de la Unidad 2.
+const auxiliaryClass=(window.videoLibrary.units||[]).find(v=>v.label==="CLASES AUDIOVISUALES");
+if(auxiliaryClass){
+ const section=document.createElement("section");section.className="course-extras auxiliary-lessons";
+ const heading=document.createElement("div");heading.className="course-section-heading";
+ const titleWrap=document.createElement("div");titleWrap.innerHTML='<p class="eyebrow">FORMACIÓN AUDIOVISUAL PROPIA</p>';
+ const h=document.createElement("h2");h.textContent="CLASES AUDIOVISUALES. ELABORACIÓN PROPIA. EL PAPEL DEL AUXILIAR DE MEDICINA ESTÉTICA EN TRATAMIENTOS MÉDICOS.";
+ titleWrap.append(h);heading.append(titleWrap);section.append(heading);
+ const list=document.createElement("div");list.className="course-item-list";
+ auxiliaryClass.videos.forEach(v=>list.append(makeCourseItem(v.title,"video","Clases audiovisuales. Elaboración propia",v)));
+ section.append(list);courseUnitsEl.parentElement.append(section);
+}
+document.getElementById("course-extra-count").textContent=`${(window.videoLibrary.extras||[]).length} vídeos`;
+const extrasEl=document.getElementById("course-extra-list");
+(window.videoLibrary.extras||[]).forEach(video=>extrasEl.append(makeCourseItem(video.title,"video","Contenidos audiovisuales de apoyo",video)));
+document.getElementById("close-course-reader")?.addEventListener("click",()=>{document.getElementById("course-reader").hidden=true;});

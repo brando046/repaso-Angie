@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <header class="site-header">
     <a class="brand" href="#" aria-label="Ir al inicio">
@@ -17,7 +19,8 @@
     </a>
     <div class="header-actions">
       <span class="header-note">Repasa a tu ritmo</span>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Activar modo oscuro" title="Cambiar tema">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Activar modo oscuro"
+        title="Cambiar tema">
         <span class="theme-icon" aria-hidden="true">☾</span>
         <span class="theme-label">Modo oscuro</span>
       </button>
@@ -26,170 +29,217 @@
 
   <nav class="main-nav container" aria-label="Navegación principal">
     <button class="nav-tab active" type="button" data-view="study-view">✿ Practicar</button>
-    <button class="nav-tab" type="button" data-view="videos-view">▶ Vídeos de repaso</button>
+    <button class="nav-tab" type="button" data-view="course-view">▤ Material del curso</button>
   </nav>
 
   <main class="container">
     <div id="study-view">
-    <section class="welcome">
-      <div class="welcome-copy">
-        <p class="eyebrow">TU RINCÓN DE ESTUDIO</p>
-        <h1>¡Hola! ¿Qué te apetece repasar hoy?</h1>
-        <p class="welcome-text">Elige una unidad y practica con tranquilidad. Elige una unidad o combina las tres para practicar. Comprueba tus respuestas y consulta tus resultados anteriores.</p>
-      </div>
-      <div class="welcome-art" aria-hidden="true">
-        <div class="art-circle circle-one"></div>
-        <div class="art-circle circle-two"></div>
-        <div class="book-illustration">
-          <span class="book-leaf">✿</span>
-          <span class="book-line"></span><span class="book-line short"></span>
+      <section class="welcome">
+        <div class="welcome-copy">
+          <p class="eyebrow">TU RINCÓN DE ESTUDIO</p>
+          <h1>¡Hola! ¿Qué te apetece repasar hoy?</h1>
+          <p class="welcome-text">Elige una unidad y practica con tranquilidad. Elige una unidad o combina las tres para
+            practicar. Comprueba tus respuestas y consulta tus resultados anteriores.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="units-section" aria-labelledby="units-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">MATERIAL DE ESTUDIO</p>
-          <h2 id="units-title">Mis unidades</h2>
-        </div>
-        <span class="unit-count">3 unidades</span>
-      </div>
-
-      <div class="unit-grid">
-        <article class="unit-card">
-          <div class="card-top">
-            <span class="unit-number">UNIDAD 10</span>
-            <span class="card-icon icon-skin" aria-hidden="true">◌</span>
+        <div class="welcome-art" aria-hidden="true">
+          <div class="art-circle circle-one"></div>
+          <div class="art-circle circle-two"></div>
+          <div class="book-illustration">
+            <span class="book-leaf">✿</span>
+            <span class="book-line"></span><span class="book-line short"></span>
           </div>
-          <h3>Cosmetología aplicada</h3>
-          <p>Fisiología celular, penetración cutánea y vectores cosméticos.</p>
-          <button class="primary-button unit-action" data-unit="10">Elegir esta unidad <span aria-hidden="true">→</span></button>
-        </article>
+        </div>
+      </section>
 
-        <article class="unit-card">
-          <div class="card-top">
-            <span class="unit-number">UNIDAD 11</span>
-            <span class="card-icon icon-face" aria-hidden="true">◡</span>
+      <section class="units-section" aria-labelledby="units-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MATERIAL DE ESTUDIO</p>
+            <h2 id="units-title">Mis unidades</h2>
           </div>
-          <h3>Diagnóstico de la piel</h3>
-          <p>Anatomía, fisiología, alteraciones y lesiones cutáneas.</p>
-          <button class="primary-button unit-action" data-unit="11">Elegir esta unidad <span aria-hidden="true">→</span></button>
-        </article>
+          <span class="unit-count">3 unidades</span>
+        </div>
 
-        <article class="unit-card">
-          <div class="card-top">
-            <span class="unit-number">UNIDAD 12</span>
-            <span class="card-icon icon-document" aria-hidden="true">▤</span>
+        <div class="unit-grid">
+          <article class="unit-card">
+            <div class="card-top">
+              <span class="unit-number">UNIDAD 10</span>
+              <span class="card-icon icon-skin" aria-hidden="true">◌</span>
+            </div>
+            <h3>Cosmetología aplicada</h3>
+            <p>Fisiología celular, penetración cutánea y vectores cosméticos.</p>
+            <button class="primary-button unit-action" data-unit="10">Elegir esta unidad <span
+                aria-hidden="true">→</span></button>
+          </article>
+
+          <article class="unit-card">
+            <div class="card-top">
+              <span class="unit-number">UNIDAD 11</span>
+              <span class="card-icon icon-face" aria-hidden="true">◡</span>
+            </div>
+            <h3>Diagnóstico de la piel</h3>
+            <p>Anatomía, fisiología, alteraciones y lesiones cutáneas.</p>
+            <button class="primary-button unit-action" data-unit="11">Elegir esta unidad <span
+                aria-hidden="true">→</span></button>
+          </article>
+
+          <article class="unit-card">
+            <div class="card-top">
+              <span class="unit-number">UNIDAD 12</span>
+              <span class="card-icon icon-document" aria-hidden="true">▤</span>
+            </div>
+            <h3>Consentimientos informados</h3>
+            <p>Concepto, importancia, objetivos y datos que debe incluir.</p>
+            <button class="primary-button unit-action" data-unit="12">Elegir esta unidad <span
+                aria-hidden="true">→</span></button>
+          </article>
+        </div>
+        <article class="combined-card">
+          <div class="combined-card-copy">
+            <span class="unit-number">EXAMEN GLOBAL</span>
+            <h3>Las tres unidades juntas</h3>
+            <p>30 preguntas mezcladas de un banco de 50. En cada repetición aparecerán preguntas que aún no hayas visto
+              y se combinarán con otras.</p>
           </div>
-          <h3>Consentimientos informados</h3>
-          <p>Concepto, importancia, objetivos y datos que debe incluir.</p>
-          <button class="primary-button unit-action" data-unit="12">Elegir esta unidad <span aria-hidden="true">→</span></button>
+          <button class="primary-button" id="start-combined">Hacer examen conjunto <span
+              aria-hidden="true">→</span></button>
         </article>
-      </div>
-      <article class="combined-card">
-        <div class="combined-card-copy">
-          <span class="unit-number">EXAMEN GLOBAL</span>
-          <h3>Las tres unidades juntas</h3>
-          <p>30 preguntas mezcladas de un banco de 50. En cada repetición aparecerán preguntas que aún no hayas visto y se combinarán con otras.</p>
-        </div>
-        <button class="primary-button" id="start-combined">Hacer examen conjunto <span aria-hidden="true">→</span></button>
-      </article>
-    </section>
+      </section>
 
-    <section class="mode-panel" id="mode-panel" hidden aria-live="polite">
-      <div class="mode-heading">
+      <section class="mode-panel" id="mode-panel" hidden aria-live="polite">
+        <div class="mode-heading">
+          <div>
+            <p class="eyebrow">UNIDAD SELECCIONADA</p>
+            <h2 id="selected-title">Examen de la unidad</h2>
+          </div>
+          <button class="close-button" id="close-panel" aria-label="Cerrar">×</button>
+        </div>
+        <div class="mode-grid">
+          <button class="mode-card" id="start-exam" type="button">
+            <span class="mode-icon" aria-hidden="true">✍️</span>
+            <span class="mode-name">Hacer el examen</span>
+            <span class="mode-description" id="exam-description">20 preguntas tipo test con corrección y explicación al
+              momento.</span>
+          </button>
+        </div>
+      </section>
+      <section class="quiz-panel" id="quiz-panel" hidden aria-live="polite">
+        <div class="quiz-topline">
+          <button class="back-button" id="back-home" type="button">← Volver a las unidades</button>
+          <span class="quiz-unit-label" id="quiz-unit-label"></span>
+        </div>
+        <div class="quiz-progress-row">
+          <span id="question-counter">PREGUNTA 1 DE 20</span>
+          <span id="score-counter">Aciertos: 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <article class="question-card" id="question-card">
+          <p class="eyebrow">PREGUNTA</p>
+          <h2 id="question-text"></h2>
+          <div class="answer-options" id="answer-options"></div>
+          <div class="answer-feedback" id="answer-feedback" hidden></div>
+          <div class="question-actions">
+            <button class="primary-button" id="check-answer" type="button" disabled>Comprobar respuesta</button>
+            <button class="primary-button next-button" id="next-question" type="button" hidden>Siguiente pregunta
+              →</button>
+          </div>
+        </article>
+        <article class="result-card" id="result-card" hidden>
+          <div class="result-symbol" id="result-symbol">✿</div>
+          <p class="eyebrow">EXAMEN FINALIZADO</p>
+          <h2 id="result-title">¡Buen trabajo!</h2>
+          <p class="result-score" id="result-score"></p>
+          <p id="result-message"></p>
+          <div class="result-actions">
+            <button class="primary-button" id="retry-exam" type="button">Repetir examen</button>
+            <button class="secondary-button" id="result-home" type="button">Volver al inicio</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="history-section" id="history-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TU PROGRESO</p>
+            <h2>Historial de exámenes</h2>
+          </div>
+          <span class="unit-count" id="history-count">0 exámenes</span>
+        </div>
+        <div id="history-list" class="history-list">
+          <p class="history-empty">Todavía no hay exámenes terminados. Cuando completes uno, aparecerá aquí tu nota y
+            podrás revisar tus respuestas.</p>
+        </div>
+      </section>
+
+      <section class="help-strip">
+        <span class="help-icon" aria-hidden="true">♡</span>
         <div>
-          <p class="eyebrow">UNIDAD SELECCIONADA</p>
-          <h2 id="selected-title">Examen de la unidad</h2>
+          <h2>Sin prisas, a tu ritmo</h2>
+          <p>Puedes entrar cuando quieras desde el iPad y repetir las unidades tantas veces como necesites.</p>
         </div>
-        <button class="close-button" id="close-panel" aria-label="Cerrar">×</button>
-      </div>
-      <div class="mode-grid">
-<button class="mode-card" id="start-exam" type="button">
-          <span class="mode-icon" aria-hidden="true">✍️</span>
-          <span class="mode-name">Hacer el examen</span>
-          <span class="mode-description" id="exam-description">20 preguntas tipo test con corrección y explicación al momento.</span>
-        </button>
-      </div>
-    </section>
-<section class="quiz-panel" id="quiz-panel" hidden aria-live="polite">
-      <div class="quiz-topline">
-        <button class="back-button" id="back-home" type="button">← Volver a las unidades</button>
-        <span class="quiz-unit-label" id="quiz-unit-label"></span>
-      </div>
-      <div class="quiz-progress-row">
-        <span id="question-counter">PREGUNTA 1 DE 20</span>
-        <span id="score-counter">Aciertos: 0</span>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-      <article class="question-card" id="question-card">
-        <p class="eyebrow">PREGUNTA</p>
-        <h2 id="question-text"></h2>
-        <div class="answer-options" id="answer-options"></div>
-        <div class="answer-feedback" id="answer-feedback" hidden></div>
-        <div class="question-actions">
-          <button class="primary-button" id="check-answer" type="button" disabled>Comprobar respuesta</button>
-          <button class="primary-button next-button" id="next-question" type="button" hidden>Siguiente pregunta →</button>
-        </div>
-      </article>
-      <article class="result-card" id="result-card" hidden>
-        <div class="result-symbol" id="result-symbol">✿</div>
-        <p class="eyebrow">EXAMEN FINALIZADO</p>
-        <h2 id="result-title">¡Buen trabajo!</h2>
-        <p class="result-score" id="result-score"></p>
-        <p id="result-message"></p>
-        <div class="result-actions">
-          <button class="primary-button" id="retry-exam" type="button">Repetir examen</button>
-          <button class="secondary-button" id="result-home" type="button">Volver al inicio</button>
-        </div>
-      </article>
-    </section>
-
-    <section class="history-section" id="history-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">TU PROGRESO</p>
-          <h2>Historial de exámenes</h2>
-        </div>
-        <span class="unit-count" id="history-count">0 exámenes</span>
-      </div>
-      <div id="history-list" class="history-list">
-        <p class="history-empty">Todavía no hay exámenes terminados. Cuando completes uno, aparecerá aquí tu nota y podrás revisar tus respuestas.</p>
-      </div>
-    </section>
-
-    <section class="help-strip">
-      <span class="help-icon" aria-hidden="true">♡</span>
-      <div>
-        <h2>Sin prisas, a tu ritmo</h2>
-        <p>Puedes entrar cuando quieras desde el iPad y repetir las unidades tantas veces como necesites.</p>
-      </div>
-    </section>
+      </section>
     </div>
 
-    <section id="videos-view" class="videos-view" hidden>
-      <section class="videos-hero">
-        <p class="eyebrow">APRENDE A TU RITMO</p>
-        <h1>Biblioteca audiovisual</h1>
-        <p>Repasa las explicaciones y demostraciones prácticas del curso. Elige una unidad para consultar sus vídeos.</p>
+    <section id="course-view" class="course-view" hidden>
+      <section class="course-hero">
+        <div>
+          <p class="eyebrow">BIBLIOTECA DEL CURSO</p>
+          <h1>Material de estudio</h1>
+          <p>Todo el contenido del curso, organizado por unidades: apuntes, materiales de apoyo y clases audiovisuales.
+          </p>
+        </div>
+        <div class="course-hero-mark" aria-hidden="true">✿</div>
       </section>
-      <div class="section-heading videos-heading">
-        <div><p class="eyebrow">MATERIAL DEL CAMPUS</p><h2>Unidades didácticas</h2></div>
-        <span class="unit-count" id="video-unit-count">Pendiente de añadir vídeos</span>
+      <div class="course-toolbar">
+        <div>
+          <p class="eyebrow">TU CAMPUS DE ESTUDIO</p>
+          <h2>Unidades didácticas</h2>
+        </div>
+        <label class="course-search"><span aria-hidden="true">⌕</span><input id="course-search" type="search"
+            placeholder="Buscar en el curso..." aria-label="Buscar en el curso"></label>
       </div>
-      <div id="video-units" class="video-unit-grid"></div>
-      <section class="audiovisual-section">
-        <div class="section-heading">
-          <div><p class="eyebrow">CONTENIDO COMPLEMENTARIO</p><h2>Contenidos audiovisuales</h2></div>
-          <span class="unit-count" id="extra-video-count">0 vídeos</span>
+      <div class="course-layout">
+        <aside class="course-sidebar">
+          <p class="sidebar-title">ÍNDICE DEL CURSO</p>
+          <nav id="course-unit-nav" aria-label="Unidades didácticas"></nav>
+        </aside>
+        <div class="course-main">
+          <div class="course-intro"><span>✧</span>
+            <div><strong>Todo lo que necesitas para repasar</strong>
+              <p>Abre las carpetas de cada unidad y selecciona un PDF o una clase para consultarlos aquí mismo.</p>
+            </div>
+          </div>
+          <div id="course-units"></div>
+          <section class="course-extras">
+            <div class="course-section-heading">
+              <div>
+                <p class="eyebrow">CONTENIDO COMPLEMENTARIO</p>
+                <h2>Contenidos audiovisuales de apoyo</h2>
+              </div><span class="course-count" id="course-extra-count"></span>
+            </div>
+            <div id="course-extra-list"></div>
+          </section>
         </div>
-        <div id="extra-videos" class="extra-video-list">
-          <div class="video-empty"><span>▶</span><h3>Próximamente</h3><p>Aquí añadiremos los vídeos complementarios que aparecen en el campus.</p></div>
+      </div>
+      <section class="course-reader" id="course-reader" hidden>
+        <div class="course-reader-heading">
+          <div>
+            <p class="eyebrow" id="course-reader-kind">LECTOR DE DOCUMENTOS</p>
+            <h2 id="course-reader-title">Documento</h2>
+          </div><button type="button" class="close-button" id="close-course-reader" aria-label="Cerrar">×</button>
         </div>
+        <div class="course-reader-content" id="course-reader-content"></div>
       </section>
       <section class="video-player-panel" id="video-player-panel" hidden>
-        <div class="player-heading"><div><p class="eyebrow">REPRODUCIENDO</p><h2 id="current-video-title">Selecciona un vídeo</h2><p id="current-video-unit"></p></div><button class="close-button" id="close-video" type="button" aria-label="Cerrar reproductor">×</button></div>
+        <div class="player-heading">
+          <div>
+            <p class="eyebrow">REPRODUCIENDO</p>
+            <h2 id="current-video-title">Selecciona un vídeo</h2>
+            <p id="current-video-unit"></p>
+          </div><button class="close-button" id="close-video" type="button" aria-label="Cerrar reproductor">×</button>
+        </div>
         <div class="video-frame" id="video-frame"></div>
       </section>
     </section>
@@ -204,4 +254,5 @@
   <script src="js/datos/conjunto.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
