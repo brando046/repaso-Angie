@@ -363,4 +363,73 @@ if(auxiliaryClass){
 document.getElementById("course-extra-count").textContent=`${(window.videoLibrary.extras||[]).length} vídeos`;
 const extrasEl=document.getElementById("course-extra-list");
 (window.videoLibrary.extras||[]).forEach(video=>extrasEl.append(makeCourseItem(video.title,"video","Contenidos audiovisuales de apoyo",video)));
-document.getElementById("close-course-reader")?.addEventListener("click",()=>{document.getElementById("course-reader").hidden=true;});
+let activeCourseDocument=0,activePdfDocument=null,activePdfLoadingTask=null;
+function disposeActiveCoursePdf(){
+ const resources=[activePdfDocument,activePdfLoadingTask];activePdfDocument=null;activePdfLoadingTask=null;
+ resources.forEach(resource=>{if(resource)resource.destroy().catch(()=>{});});
+}
+function openCourseDocument(doc,unitTitle){
+ const reader=document.getElementById("course-reader"),content=document.getElementById("course-reader-content");
+ const requestId=++activeCourseDocument;disposeActiveCoursePdf();
+ const url=new URL(doc.path,document.baseURI);
+ document.getElementById("course-reader-kind").textContent=doc.kind==="image"?"IMAGEN DE APOYO":"DOCUMENTO PDF";
+ document.getElementById("course-reader-title").textContent=doc.label;
+ content.replaceChildren();reader.hidden=false;reader.scrollIntoView({behavior:"smooth",block:"start"});
+ if(doc.kind==="image"){
+  const image=document.createElement("img");image.className="course-document-image";image.src=url.href;image.alt=`${doc.label} · ${unitTitle}`;
+  image.addEventListener("error",()=>{content.textContent="No se pudo cargar esta imagen.";},{once:true});content.append(image);return;
+ }
+ const fallback=()=>{
+  if(requestId!==activeCourseDocument)return;
+  const frame=document.createElement("iframe");frame.className="course-pdf-frame";frame.src=url.href;frame.title=doc.label;frame.setAttribute("loading","lazy");content.replaceChildren(frame);
+ };
+ const pdfjs=window.pdfjsLib;
+ if(!pdfjs){fallback();return;}
+ pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+ const toolbar=document.createElement("div");toolbar.className="pdf-viewer-toolbar";
+ const status=document.createElement("span");status.textContent="Cargando documento...";
+ const controls=document.createElement("div");controls.className="pdf-viewer-controls";
+ const zoomOut=document.createElement("button");zoomOut.type="button";zoomOut.textContent="−";zoomOut.setAttribute("aria-label","Reducir zoom");zoomOut.disabled=true;
+ const zoomLabel=document.createElement("span");zoomLabel.id="pdf-zoom-label";zoomLabel.textContent="100%";
+ const zoomIn=document.createElement("button");zoomIn.type="button";zoomIn.textContent="+";zoomIn.setAttribute("aria-label","Aumentar zoom");zoomIn.disabled=true;
+ const download=document.createElement("a");download.className="pdf-download-link";download.href=url.href;download.target="_blank";download.rel="noopener";download.textContent="Descargar PDF";
+ controls.append(zoomOut,zoomLabel,zoomIn,download);toolbar.append(status,controls);
+ const pages=document.createElement("div");pages.className="pdf-pages-scroll";pages.setAttribute("aria-label",`Páginas de ${doc.label}`);
+ content.append(toolbar,pages);
+ let pdfDocument=null,scale=1,rendering=false;
+ async function renderPages(){
+  if(rendering||!pdfDocument||requestId!==activeCourseDocument)return;
+  rendering=true;zoomOut.disabled=true;zoomIn.disabled=true;pages.replaceChildren();
+  try{
+   const outputScale=Math.min(window.devicePixelRatio||1,2);
+   for(let pageNumber=1;pageNumber<=pdfDocument.numPages;pageNumber++){
+    if(requestId!==activeCourseDocument)return;
+    const page=await pdfDocument.getPage(pageNumber),viewport=page.getViewport({scale});
+    const wrapper=document.createElement("div");wrapper.className="pdf-page-wrapper";
+    const canvas=document.createElement("canvas");canvas.className="pdf-page-canvas";
+    canvas.width=Math.floor(viewport.width*outputScale);canvas.height=Math.floor(viewport.height*outputScale);
+    canvas.style.width=`${Math.floor(viewport.width)}px`;canvas.style.height=`${Math.floor(viewport.height)}px`;
+    wrapper.append(canvas);
+    const pageLabel=document.createElement("span");pageLabel.className="pdf-page-number";pageLabel.textContent=`${pageNumber} / ${pdfDocument.numPages}`;wrapper.append(pageLabel);pages.append(wrapper);
+    await page.render({canvasContext:canvas.getContext("2d"),viewport,transform:[outputScale,0,0,outputScale,0,0]}).promise;
+   }
+   status.textContent=`${pdfDocument.numPages} páginas · ${unitTitle}`;
+  }catch(error){
+   if(requestId===activeCourseDocument){status.textContent="No se pudo mostrar el PDF. Abriendo el visor del navegador...";fallback();}
+  }finally{
+   if(requestId===activeCourseDocument){rendering=false;zoomOut.disabled=scale<=0.6;zoomIn.disabled=scale>=2.4;}
+  }
+ }
+ zoomOut.addEventListener("click",()=>{if(scale>0.6){scale=Math.max(0.6,Math.round((scale-0.2)*10)/10);zoomLabel.textContent=`${Math.round(scale*100)}%`;renderPages();}});
+ zoomIn.addEventListener("click",()=>{if(scale<2.4){scale=Math.min(2.4,Math.round((scale+0.2)*10)/10);zoomLabel.textContent=`${Math.round(scale*100)}%`;renderPages();}});
+ activePdfLoadingTask=pdfjs.getDocument({url:url.href});
+ activePdfLoadingTask.promise.then(pdf=>{
+  if(requestId!==activeCourseDocument){pdf.destroy().catch(()=>{});return;}
+  activePdfLoadingTask=null;activePdfDocument=pdf;pdfDocument=pdf;
+  status.textContent=`${pdf.numPages} páginas · ${unitTitle}`;zoomOut.disabled=false;zoomIn.disabled=false;renderPages();
+ }).catch(()=>{
+  if(requestId!==activeCourseDocument)return;
+  activePdfLoadingTask=null;status.textContent="No se pudo mostrar el PDF. Abriendo el visor del navegador...";fallback();
+ });
+}
+document.getElementById("close-course-reader")?.addEventListener("click",()=>{activeCourseDocument++;disposeActiveCoursePdf();document.getElementById("course-reader").hidden=true;document.getElementById("course-reader-content").replaceChildren();});
