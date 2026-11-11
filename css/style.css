@@ -660,3 +660,17 @@ body.study-reading { overflow: hidden; }
 @media(max-width:600px){.course-hero{padding:25px 22px}.course-hero-mark{display:none}.course-toolbar{align-items:stretch;flex-direction:column}.course-search{width:auto}.course-sidebar nav{grid-template-columns:repeat(3,1fr)}.course-unit-body{padding-left:17px}.course-item{align-items:flex-start;flex-wrap:wrap}.course-item-action{margin-left:45px}}
 
 .course-pdf-frame{display:block;width:100%;height:min(82vh,1050px);min-height:620px;border:0;border-radius:10px;background:#f4f4f4}.course-document-image{display:block;max-width:100%;max-height:80vh;object-fit:contain;margin:20px auto}.course-item-icon.is-image{background:#edf0fb;color:#6476ad}.course-reader-content{margin-top:15px}
+
+/* Visor PDF táctil basado en PDF.js: desplazamiento vertical dentro del lector */
+.course-reader-content{min-width:0;}
+.pdf-viewer-toolbar{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;margin-bottom:10px;border:1px solid var(--line);border-radius:11px;background:var(--paper);}
+.pdf-viewer-toolbar>span{font-size:.8rem;color:var(--muted);}
+.pdf-viewer-controls{display:flex;align-items:center;gap:8px;}
+.pdf-viewer-controls button{width:36px;height:34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:1.15rem;cursor:pointer;}
+#pdf-zoom-label{min-width:44px;text-align:center;font-size:.78rem;color:var(--muted);}
+.pdf-download-link{padding:8px 11px;border-radius:8px;background:var(--green-soft);color:var(--green-dark);text-decoration:none;font-size:.78rem;font-weight:700;}
+.pdf-pages-scroll{height:min(78vh,1000px);min-height:420px;overflow-y:auto;overflow-x:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom;background:#e7e9e7;border-radius:10px;padding:14px 8px;}
+.pdf-page-wrapper{position:relative;width:max-content;max-width:100%;margin:0 auto 16px;padding:0 0 22px;background:#fff;box-shadow:0 2px 9px rgba(0,0,0,.14);}
+.pdf-page-canvas{display:block;max-width:none;height:auto;}
+.pdf-page-number{position:absolute;right:8px;bottom:4px;color:#68716d;font-size:10px;}
+@media(max-width:700px){.pdf-pages-scroll{height:72vh;min-height:380px;padding:8px 4px;touch-action:pan-y;}.pdf-page-wrapper{margin-bottom:10px;}.pdf-viewer-toolbar{align-items:flex-start;flex-direction:column;}.pdf-viewer-controls{width:100%;justify-content:flex-end;}.course-reader{padding:12px;}}

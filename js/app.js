@@ -268,50 +268,34 @@ document.getElementById("close-video").addEventListener("click", () => {
   document.getElementById("video-player-panel").hidden = true;
   document.getElementById("video-frame").replaceChildren();
 });
-// Navegación principal: zona de práctica y biblioteca unificada del curso.
-const viewTabs=document.querySelectorAll(".nav-tab");
-const studyView=document.getElementById("study-view");
-const courseView=document.getElementById("course-view");
-viewTabs.forEach(tab=>tab.addEventListener("click",()=>{
-  const target=tab.dataset.view;
-  studyView.hidden=target!=="study-view";
-  courseView.hidden=target!=="course-view";
-  viewTabs.forEach(item=>item.classList.toggle("active",item===tab));
-  window.scrollTo({top:0,behavior:"smooth"});
-}));
-
+// Navegación principal: cambio explícito entre Practicar y Material del curso.
+const mainNavigation=document.querySelector('.main-nav');
+const studyView=document.getElementById('study-view');
+const courseView=document.getElementById('course-view');
+function activateMainView(viewId){
+  const showCourse=viewId==='course-view';
+  studyView.hidden=showCourse;
+  courseView.hidden=!showCourse;
+  document.querySelectorAll('.main-nav .nav-tab').forEach(button=>{
+    const active=button.dataset.view===viewId;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  if(showCourse && typeof renderCourse==='function') renderCourse(courseSearch?.value||'');
+  window.scrollTo({top:0,behavior:'auto'});
+}
+mainNavigation?.addEventListener('click',event=>{
+  const button=event.target.closest('.nav-tab[data-view]');
+  if(!button || !mainNavigation.contains(button)) return;
+  event.preventDefault();
+  activateMainView(button.dataset.view);
+});
 const pdfDocuments={"1":[{"section":"Materiales de apoyo","label":"Lectura 1 (1).pdf","path":"docs/unidad-1/Lectura 1 (1).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 1.pdf","path":"docs/unidad-1/Tema 1.pdf","kind":"pdf"}],"10":[{"section":"Materiales de apoyo","label":"Lectura 1 (9).pdf","path":"docs/unidad-10/Lectura 1 (9).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 10 (1).pdf","path":"docs/unidad-10/Tema 10 (1).pdf","kind":"pdf"}],"11":[{"section":"Materiales de apoyo","label":"Lectura 1 (10).pdf","path":"docs/unidad-11/Lectura 1 (10).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 11 (1).pdf","path":"docs/unidad-11/Tema 11 (1).pdf","kind":"pdf"}],"12":[{"section":"Materiales de apoyo","label":"Lectura 1 (11).pdf","path":"docs/unidad-12/Lectura 1 (11).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 12 (1).pdf","path":"docs/unidad-12/Tema 12 (1).pdf","kind":"pdf"}],"2":[{"section":"Materiales de apoyo","label":"Lectura 1 (2).pdf","path":"docs/unidad-2/Lectura 1 (2).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 2.pdf","path":"docs/unidad-2/Tema 2.pdf","kind":"pdf"}],"3":[{"section":"Materiales de apoyo","label":"ENTRENO PROFESIONAL MICRO. Estructuras y trazos técnica pelo a pelo.","path":"docs/unidad-3/ENTRENO MICRO. Estructuras y trazos técnica pelo a pelo.pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Lectura 1 (3).pdf","path":"docs/unidad-3/Lectura 1 (3).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 3.pdf","path":"docs/unidad-3/Tema 3.pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Esquema TIPOS DE AGUJAS","path":"docs/unidad-3/Tipos de agujas Micro.pdf","kind":"pdf"}],"4":[{"section":"Materiales de apoyo","label":"Lectura 1 (4).pdf","path":"docs/unidad-4/Lectura 1 (4).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 4.pdf","path":"docs/unidad-4/Tema 4.pdf","kind":"pdf"}],"5":[{"section":"Materiales de apoyo","label":"Lectura 1 (4).pdf","path":"docs/unidad-5/Lectura 1 (4).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 5 (1).pdf","path":"docs/unidad-5/Tema 5 (1).pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Test de fototipo Fitzpatrick","path":"docs/unidad-5/Test de fototipo Fitzpatrick.gif","kind":"image"}],"6":[{"section":"Materiales de apoyo","label":"Lectura 1 (6).pdf","path":"docs/unidad-6/Lectura 1 (6).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 6 (1).pdf","path":"docs/unidad-6/Tema 6 (1).pdf","kind":"pdf"}],"7":[{"section":"Materiales de apoyo","label":"Lectura 1 (7).pdf","path":"docs/unidad-7/Lectura 1 (7).pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 7.pdf","path":"docs/unidad-7/Tema 7.pdf","kind":"pdf"}],"8":[{"section":"Contenido teórico","label":"Tema 8.pdf","path":"docs/unidad-8/Tema 8.pdf","kind":"pdf"}],"9":[{"section":"Materiales de apoyo","label":"Lectura 1 (8).pdf","path":"docs/unidad-9/Lectura 1 (8).pdf","kind":"pdf"},{"section":"Materiales de apoyo","label":"Anexo. Parámetros HIFU.","path":"docs/unidad-9/PARAMETROS HIFU.pdf","kind":"pdf"},{"section":"Contenido teórico","label":"Tema 9.pdf","path":"docs/unidad-9/Tema 9.pdf","kind":"pdf"}]};
 const unitTitles={1:"Introducción a la medicina estética",2:"Medicina estética facial",3:"Micropigmentación",4:"Aparatología en estética",5:"Depilación",6:"Tratamientos estéticos",7:"Higiene facial y peelings",8:"Cuidados y tratamientos",9:"Tratamientos médico-estéticos",10:"Cosmetología aplicada",11:"Diagnóstico de la piel",12:"Consentimientos informados"};
 const courseUnitsEl=document.getElementById("course-units");
 const courseNav=document.getElementById("course-unit-nav");
 const courseSearch=document.getElementById("course-search");
 const pdfUnits=Object.keys(pdfDocuments).map(n=>({n:Number(n)}));
-function makeCourseItem(label,kind,unitTitle,video=null){
- const row=document.createElement("div");row.className="course-item";
- const icon=document.createElement("span");icon.className=`course-item-icon ${kind==="video"?"is-video":"is-pdf"}`;icon.textContent=kind==="video"?"▶":"PDF";
- const copy=document.createElement("div");copy.className="course-item-copy";
- const name=document.createElement("strong");name.textContent=label;
- const meta=document.createElement("small");meta.textContent=kind==="video"?"Clase audiovisual":"Documento PDF pendiente de incorporar";
- copy.append(name,meta);
- const action=document.createElement("button");action.type="button";action.className="course-item-action";
- if(kind==="video"){action.textContent="Ver vídeo";action.addEventListener("click",()=>playCourseVideo(video,unitTitle));}
- else {action.textContent="Próximamente";action.disabled=true;}
- row.append(icon,copy,action);return row;
-}
-
-function openCourseDocument(doc,unitNo){
- const reader=document.getElementById("course-reader");
- const content=document.getElementById("course-reader-content");
- content.replaceChildren();
- document.getElementById("course-reader-title").textContent=doc.label;
- document.getElementById("course-reader-kind").textContent=doc.kind==="image"?"MATERIAL DE APOYO":"LECTOR PDF";
- if(doc.kind==="image"){
-  const img=document.createElement("img");img.src=doc.path;img.alt=doc.label;img.className="course-document-image";content.append(img);
- }else{
-  const frame=document.createElement("iframe");frame.src=doc.path;frame.title=doc.label;frame.className="course-pdf-frame";content.append(frame);
- }
- reader.hidden=false;reader.scrollIntoView({behavior:"smooth",block:"start"});
-}
 function makeCourseItem(label,kind,unitTitle,video=null,doc=null){
  const row=document.createElement("div");row.className="course-item";
  const icon=document.createElement("span");icon.className="course-item-icon "+({video:"is-video",pdf:"is-pdf",image:"is-image"}[kind]);icon.textContent=kind==="video"?"▶":kind==="image"?"IMG":"PDF";
