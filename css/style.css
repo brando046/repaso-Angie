@@ -583,3 +583,55 @@ body.study-reading { overflow: hidden; }
   min-height: 40px;
   font-size: .88rem;
 }
+
+
+/* Navegación principal y biblioteca audiovisual */
+[hidden] { display: none !important; }
+.main-nav { display: flex; gap: 10px; padding-top: 0; padding-bottom: 18px; }
+.nav-tab { border: 1px solid var(--line); background: var(--paper); color: var(--muted); border-radius: 999px; padding: 10px 17px; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; transition: .2s ease; }
+.nav-tab:hover { border-color: var(--green); color: var(--green); }
+.nav-tab.active { background: var(--green); border-color: var(--green); color: #fff; }
+.videos-view { padding-top: 5px; }
+.videos-hero { padding: 34px 38px; margin-bottom: 35px; border-radius: 23px; background: linear-gradient(115deg, var(--green-soft), var(--rose-soft)); }
+.videos-hero h1 { margin-bottom: 9px; }
+.videos-hero > p:last-child { max-width: 650px; margin: 0; color: var(--muted); }
+.videos-heading { margin-bottom: 17px; }
+.video-unit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+.video-unit-card { padding: 21px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); box-shadow: 0 5px 18px rgba(44,66,57,.035); }
+.video-unit-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+.video-count { color: var(--muted); font-size: .8rem; }
+.video-unit-card h3 { margin: 0 0 13px; font-size: 1.15rem; }
+.video-lesson-list { display: grid; gap: 7px; }
+.video-lesson { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--bg); color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
+.video-lesson:hover { border-color: var(--green); background: var(--green-soft); }
+.lesson-play { width: 29px; height: 29px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 9px; background: var(--green-soft); color: var(--green); font-size: .75rem; }
+.lesson-title { flex: 1; font-size: .9rem; font-weight: 600; }
+.lesson-arrow { color: var(--green); font-weight: 800; }
+.audiovisual-section { margin-top: 43px; }
+.extra-video-list { display: grid; }
+.extra-list { display: grid; gap: 8px; }
+.video-empty { grid-column: 1 / -1; padding: 35px 25px; border: 1px dashed var(--line); border-radius: 17px; background: var(--paper); text-align: center; }
+.video-empty > span { display: inline-grid; place-items: center; width: 48px; height: 48px; margin-bottom: 9px; border-radius: 15px; background: var(--green-soft); color: var(--green); font-size: 1.4rem; }
+.video-empty h3 { margin: 0 0 5px; font-size: 1.12rem; }
+.video-empty p { max-width: 570px; margin: 0 auto; color: var(--muted); font-size: .9rem; }
+.video-empty.compact { padding: 27px; }
+.video-player-panel { margin-top: 38px; padding: 23px; border: 1px solid var(--line); border-radius: 19px; background: var(--paper); box-shadow: var(--shadow); }
+.player-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 16px; }
+.player-heading h2 { margin: 0; font-size: 1.35rem; }
+.player-heading p:last-child { margin: 3px 0 0; color: var(--muted); font-size: .88rem; }
+.video-frame { overflow: hidden; width: 100%; aspect-ratio: 16 / 9; border-radius: 13px; background: #101613; }
+.video-frame iframe, .video-frame video { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; }
+:root[data-theme="dark"] .video-unit-card { box-shadow: 0 5px 18px rgba(0,0,0,.12); }
+:root[data-theme="dark"] .video-lesson { background: var(--paper); }
+@media (max-width: 700px) {
+  .video-unit-grid { grid-template-columns: 1fr; }
+  .videos-hero { padding: 27px 23px; }
+  .video-player-panel { padding: 16px; }
+}
+@media (max-width: 480px) {
+  .main-nav { padding-left: 17px; padding-right: 17px; }
+  .nav-tab { flex: 1; padding: 10px 9px; font-size: .82rem; }
+  .section-heading { align-items: flex-start; gap: 10px; }
+}
+
+.video-pending-note { margin: -5px 0 12px; color: var(--muted, #78847d); font-size: .88rem; font-style: italic; }

@@ -24,7 +24,13 @@
     </div>
   </header>
 
+  <nav class="main-nav container" aria-label="Navegación principal">
+    <button class="nav-tab active" type="button" data-view="study-view">✿ Practicar</button>
+    <button class="nav-tab" type="button" data-view="videos-view">▶ Vídeos de repaso</button>
+  </nav>
+
   <main class="container">
+    <div id="study-view">
     <section class="welcome">
       <div class="welcome-copy">
         <p class="eyebrow">TU RINCÓN DE ESTUDIO</p>
@@ -159,6 +165,33 @@
         <h2>Sin prisas, a tu ritmo</h2>
         <p>Puedes entrar cuando quieras desde el iPad y repetir las unidades tantas veces como necesites.</p>
       </div>
+    </section>
+    </div>
+
+    <section id="videos-view" class="videos-view" hidden>
+      <section class="videos-hero">
+        <p class="eyebrow">APRENDE A TU RITMO</p>
+        <h1>Biblioteca audiovisual</h1>
+        <p>Repasa las explicaciones y demostraciones prácticas del curso. Elige una unidad para consultar sus vídeos.</p>
+      </section>
+      <div class="section-heading videos-heading">
+        <div><p class="eyebrow">MATERIAL DEL CAMPUS</p><h2>Unidades didácticas</h2></div>
+        <span class="unit-count" id="video-unit-count">Pendiente de añadir vídeos</span>
+      </div>
+      <div id="video-units" class="video-unit-grid"></div>
+      <section class="audiovisual-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">CONTENIDO COMPLEMENTARIO</p><h2>Contenidos audiovisuales</h2></div>
+          <span class="unit-count" id="extra-video-count">0 vídeos</span>
+        </div>
+        <div id="extra-videos" class="extra-video-list">
+          <div class="video-empty"><span>▶</span><h3>Próximamente</h3><p>Aquí añadiremos los vídeos complementarios que aparecen en el campus.</p></div>
+        </div>
+      </section>
+      <section class="video-player-panel" id="video-player-panel" hidden>
+        <div class="player-heading"><div><p class="eyebrow">REPRODUCIENDO</p><h2 id="current-video-title">Selecciona un vídeo</h2><p id="current-video-unit"></p></div><button class="close-button" id="close-video" type="button" aria-label="Cerrar reproductor">×</button></div>
+        <div class="video-frame" id="video-frame"></div>
+      </section>
     </section>
   </main>
 

@@ -150,3 +150,208 @@ document.getElementById("history-list").addEventListener("click",event=>{
   replayHistoryExam(button.dataset.replayRecord);
 });
 renderHistory();
+
+
+// Navegación entre la zona de exámenes y la biblioteca audiovisual.
+const viewTabs = document.querySelectorAll(".nav-tab");
+const studyView = document.getElementById("study-view");
+const videosView = document.getElementById("videos-view");
+viewTabs.forEach(tab => tab.addEventListener("click", () => {
+  const showVideos = tab.dataset.view === "videos-view";
+  studyView.hidden = showVideos;
+  videosView.hidden = !showVideos;
+  viewTabs.forEach(item => item.classList.toggle("active", item === tab));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}));
+
+// Añadiremos aquí los vídeos reales cuando se faciliten sus nombres y enlaces.
+// Cada unidad puede tener cero, uno o varios vídeos. Las unidades vacías no se muestran.
+window.videoLibrary = window.videoLibrary || {
+  // La lección 1 queda pendiente de incorporar cuando se facilite la grabación.
+  units: [
+    {
+      label: "CLASES AUDIOVISUALES",
+      title: "El papel del auxiliar de medicina estética en tratamientos médicos",
+      videos: [
+        { title: "Lección 1. El papel de la auxiliar de medicina estética en tratamientos médicos", type: "drive", id: "12fydot79dtFkkabC1fZPgRLZiW9VUnF4" },
+        { title: "Lección 2. El rol de la auxiliar de medicina estética en tratamiento de ácido hialurónico", type: "vimeo", id: "1187349137", hash: "8136627f79" },
+        { title: "Lección 3. El rol de la auxiliar de medicina estética en tratamiento de mesoterapia", type: "vimeo", id: "1187721991", hash: "7c12f1210b" }
+      ]
+    },
+    {
+      label: "UNIDAD DIDÁCTICA 3",
+      title: "Microblading y micropigmentación",
+      videos: [
+        { title: "Clase Audiovisual. Elaboración propia. Microblading y micropigmentación. Tips prácticos.", type: "vimeo", id: "875130314", hash: "f8161b943e" },
+        { title: "Clase Audiovisual. Elaboración propia. Micropigmentación de labios", type: "vimeo", id: "1052246042", hash: "da016f2aa4" },
+        { title: "Clase Audiovisual. Elaboración propia. Retoque Micropigmentación de labios", type: "vimeo", id: "1098520747", hash: "dd8f09d2fb" }
+      ]
+    },
+    {
+      label: "UNIDAD DIDÁCTICA 4",
+      title: "Tratamientos corporales y aparatología",
+      videos: [
+        { title: "Clase Audiovisual. Elaboración propia. Protocolo de Presoterapia. Aplicaciones y beneficios.", type: "vimeo", id: "917128903", hash: "df2169f748" },
+        { title: "Clase Audiovisual. Elaboración propia. Microdermoabrasión y microneedling.", type: "vimeo", id: "943985705", hash: "a3a8c87654" },
+        { title: "Clase Audiovisual. Elaboración propia. Protocolo de Dermapen + Aquapure", type: "vimeo", id: "1213579834", hash: "04f06cbb74" },
+        { title: "Clase Audiovisual. Elaboración propia. Cavitación.", type: "vimeo", id: "1050041831", hash: "faf6b715aa" },
+        { title: "Clase Audiovisual. Elaboración propia. Protocolo de LPG", type: "vimeo", id: "1212042585", hash: "d2b53d059a" },
+        { title: "Clase Audiovisual. Elaboración propia. Protocolo Ondas de Choque", type: "vimeo", id: "1214276361", hash: "3037cfd531" }
+      ]
+    },
+    {
+      label: "UNIDAD DIDÁCTICA 5",
+      title: "Depilación láser",
+      videos: [
+        { title: "Clase Audiovisual. Elaboración propia. Depilación Laser. Tipos de láser y Protocolo.", type: "vimeo", id: "915566302", hash: "97e101e280" },
+        { title: "Clase Audiovisual. Elaboración propia. Depilación Láser con IPL.", type: "vimeo", id: "1008787212", hash: "02b75f5f65" },
+        { title: "Clase Audiovisual. Elaboración propia. Depilación Láser. Preguntas de Seguridad. Protocolo, Parámetros e Indicaciones.", type: "vimeo", id: "1211708763", hash: "313e80457d" }
+      ]
+    },
+    {
+      label: "UNIDAD DIDÁCTICA 7",
+      title: "Higiene facial y peelings",
+      videos: [
+        { title: "Clase Audiovisual. Elaboración propia. Higiene facial y Peeling Químico. Protocolo profesional en cabina.", type: "vimeo", id: "915968462", hash: "1431f47bf1" },
+        { title: "Clase Audiovisual. Elaboración propia. Hidraskin.", type: "vimeo", id: "944012060", hash: "834c2f5e95" },
+        { title: "Clase Audiovisual. Elaboración propia. Peeling Enzimático.", type: "vimeo", id: "1173928251", hash: "4e0ef14f72" },
+        { title: "Clase Audiovisual. Elaboración propia. Hollywood Peel (Carbon Peel). Protocolo práctico.", type: "vimeo", id: "1174367463", hash: "c64b781c7a" }
+      ]
+    },
+    {
+      label: "UNIDAD DIDÁCTICA 9",
+      title: "Tratamientos médico-estéticos",
+      videos: [
+        { title: "Clase Audiovisual. Elaboración propia. HIFU. Procedimiento y mapa facial.", type: "vimeo", id: "875145989", hash: "d34919ceab" },
+        { title: "Clase Audiovisual. Elaboración propia. Radiofrecuencia facial y corporal.", type: "vimeo", id: "938664848", hash: "dc81a128be" }
+      ]
+    }
+  ],
+  extras: [
+    { title: "Vídeo 1. Todo sobre presoterapia", type: "youtube", id: "52gR0GPPdwU" },
+    { title: "Vídeo 2. Ventajas de la Electrodepilación", type: "youtube", id: "4gaaZHQ2GOs" },
+    { title: "Vídeo 3. Hirsutismo. Aumento del pelo corporal en mujeres. Causas, tratamiento", type: "youtube", id: "SX2WpXgm7q8" },
+    { title: "Vídeo 4. ¿Qué es la hipertricosis? Causas. Consecuencias y soluciones", type: "youtube", id: "CcXXYxDCIPQ" },
+    { title: "Vídeo 5. Tipos de celulitis", type: "youtube", id: "5qww_CpwsOs" },
+    { title: "Vídeo 6. Cómo realizar una Limpieza Facial con Microdermoabrasión o Punta de Diamante", type: "youtube", id: "PI8Bb6PwQvg" },
+    { title: "Vídeo 7. Peeling: ¿Qué es y que resultados tiene?", type: "youtube", id: "HSOZ4H3x_Uw" },
+    { title: "Vídeo 8. Varices: ¿Qué son y por qué se producen?", type: "youtube", id: "i7PC5Pf4krQ" },
+    { title: "Vídeo 9. Linfedema: ¿Qué es, causas y tratamiento? Método Godoy", type: "youtube", id: "Nkvqm2hsLkU" },
+    { title: "Vídeo 10. Ultrasonidos estéticos", type: "youtube", id: "KNDOLhuU15M" },
+    { title: "Vídeo 11. Radiofrecuencia. ¿Qué es y para qué sirve?", type: "youtube", id: "Yn7Cz9ulrZM" },
+    { title: "Vídeo 12. ¿Qué es la mesoterapia virtual?", type: "youtube", id: "iceVuRlH-K8" },
+    { title: "Vídeo 13. Diferencias entre Micropigmentación y Microblading", type: "youtube", id: "z2fQoTLGg5U" }
+  ]
+};
+
+function renderVideoLibrary() {
+  const unitContainer = document.getElementById("video-units");
+  const extraContainer = document.getElementById("extra-videos");
+  const units = (window.videoLibrary.units || []).filter(unit => Array.isArray(unit.videos) && unit.videos.length);
+  const extras = window.videoLibrary.extras || [];
+  document.getElementById("video-unit-count").textContent = units.length ? `${units.length} unidades con vídeos` : "Aún sin vídeos";
+  document.getElementById("extra-video-count").textContent = `${extras.length} vídeos`;
+  unitContainer.replaceChildren();
+
+  if (!units.length) {
+    const empty = document.createElement("div");
+    empty.className = "video-empty";
+    empty.innerHTML = '<span>✿</span><h3>Tu biblioteca está preparada</h3><p>Cuando incorporemos los enlaces y las grabaciones, aparecerán aquí las unidades que tengan vídeos. Las unidades sin contenido audiovisual no se mostrarán.</p>';
+    unitContainer.appendChild(empty);
+  } else {
+    units.forEach(unit => {
+      const card = document.createElement("article");
+      card.className = "video-unit-card";
+      const top = document.createElement("div");
+      top.className = "video-unit-top";
+      const label = document.createElement("span");
+      label.className = "unit-number";
+      label.textContent = unit.label;
+      const count = document.createElement("span");
+      count.className = "video-count";
+      count.textContent = `${unit.videos.length} ${unit.videos.length === 1 ? "vídeo" : "vídeos"}`;
+      top.append(label, count);
+      const title = document.createElement("h3");
+      title.textContent = unit.title;
+      card.append(top, title);
+      if (unit.pending) {
+        const pending = document.createElement("p");
+        pending.className = "video-pending-note";
+        pending.textContent = unit.pending;
+        card.appendChild(pending);
+      }
+      const list = document.createElement("div");
+      list.className = "video-lesson-list";
+      unit.videos.forEach(video => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "video-lesson";
+        button.innerHTML = '<span class="lesson-play">▶</span><span class="lesson-title"></span><span class="lesson-arrow">→</span>';
+        button.querySelector(".lesson-title").textContent = video.title;
+        button.addEventListener("click", () => playCourseVideo(video, unit.title));
+        list.appendChild(button);
+      });
+      card.appendChild(list);
+      unitContainer.appendChild(card);
+    });
+  }
+
+  extraContainer.replaceChildren();
+  if (!extras.length) {
+    const empty = document.createElement("div");
+    empty.className = "video-empty compact";
+    empty.innerHTML = '<span>▶</span><h3>Contenidos audiovisuales</h3><p>Aquí organizaremos los vídeos complementarios numerados del campus.</p>';
+    extraContainer.appendChild(empty);
+  } else {
+    const list = document.createElement("div");
+    list.className = "video-unit-card extra-list";
+    extras.forEach(video => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "video-lesson";
+      button.innerHTML = '<span class="lesson-play">▶</span><span class="lesson-title"></span><span class="lesson-arrow">→</span>';
+      button.querySelector(".lesson-title").textContent = video.title;
+      button.addEventListener("click", () => playCourseVideo(video, "Contenidos audiovisuales"));
+      list.appendChild(button);
+    });
+    extraContainer.appendChild(list);
+  }
+}
+
+function playCourseVideo(video, unitTitle) {
+  const panel = document.getElementById("video-player-panel");
+  const frame = document.getElementById("video-frame");
+  frame.replaceChildren();
+  document.getElementById("current-video-title").textContent = video.title;
+  document.getElementById("current-video-unit").textContent = unitTitle;
+  if (video.type === "local") {
+    const player = document.createElement("video");
+    player.controls = true;
+    player.playsInline = true;
+    player.src = video.src;
+    frame.appendChild(player);
+  } else if ((video.type === "vimeo" || video.type === "youtube" || video.type === "drive") && video.id) {
+    const player = document.createElement("iframe");
+    const url = video.type === "vimeo"
+      ? new URL(`https://player.vimeo.com/video/${encodeURIComponent(video.id)}`)
+      : video.type === "youtube"
+        ? new URL(`https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.id)}`)
+        : new URL(`https://drive.google.com/file/d/${encodeURIComponent(video.id)}/preview`);
+    if (video.type === "vimeo" && video.hash) url.searchParams.set("h", video.hash);
+    player.src = url.toString();
+    player.title = video.title;
+    player.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+    player.allowFullscreen = true;
+    player.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.appendChild(player);
+  } else {
+    frame.textContent = "Este vídeo todavía no tiene una fuente configurada.";
+  }
+  panel.hidden = false;
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+document.getElementById("close-video").addEventListener("click", () => {
+  document.getElementById("video-player-panel").hidden = true;
+  document.getElementById("video-frame").replaceChildren();
+});
+renderVideoLibrary();
